@@ -49,13 +49,13 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	defer file.Close()
 	data, err := io.ReadAll(file)
 	if err != nil {
-		http.Error(w, "Error reading file: "+err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Error reading file: "+err.Error(), http.StatusBadRequest)
 		return
 	}
 	input := strings.TrimSpace(string(data))
 	result, err := service.ConvertMorseOrText(input)
 	if err != nil {
-		http.Error(w, "Error converting data: "+err.Error(), http.StatusBadRequest)
+		http.Error(w, "Error converting data: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 	ext := filepath.Ext(handler.Filename)
